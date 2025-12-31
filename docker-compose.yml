@@ -1,0 +1,54 @@
+# Configuration Docker Compose pour l'environnement de développement
+# Inclut Axon Server, PostgreSQL et pgAdmin
+
+services:
+  # Serveur Axon pour la gestion des événements
+  axonserver:
+    image: 'axoniq/axonserver:latest'
+    container_name: axon-server
+    environment:
+      - 'AXONIQ_AXONSERVER_STANDALONE=true'
+    ports:
+      - '8024:8024'
+      - '8124:8124'
+    networks:
+      - bank-network
+
+  # Base de données PostgreSQL
+  postgres:
+    image: 'postgres:15'
+    container_name: postgres-db
+    environment:
+      - 'POSTGRES_DB=bank_account_db'
+      - 'POSTGRES_PASSWORD=secret123'
+      - 'POSTGRES_USER=dbadmin'
+    volumes:
+      - bank_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - bank-network
+
+  # Interface d'administration PostgreSQL
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin-interface
+    restart: always
+    ports:
+      - "8088:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@bank.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    volumes:
+      - bank_pgadmin_data:/var/lib/pgadmin
+    networks:
+      - bank-network
+
+volumes:
+  bank_data:
+  bank_pgadmin_data:
+
+
+networks:
+  bank-network:
+    driver: bridge
