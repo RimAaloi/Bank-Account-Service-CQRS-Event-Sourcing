@@ -107,45 +107,6 @@ Le service analytics démarre sur le port **8084**.
 | GET | `/query/accountAnalytics/{accountId}` | Analyse d'un compte |
 | GET | `/query/accountAnalytics/{accountId}/watch` | Suivi en temps réel (SSE) |
 
-## Exemples de requêtes
-
-### Créer un compte
-
-```bash
-curl -X POST http://localhost:8085/commands/account/create \
-  -H "Content-Type: application/json" \
-  -d '{"currency": "MAD", "initialBalance": 5000}'
-```
-
-### Créditer un compte
-
-```bash
-curl -X POST http://localhost:8085/commands/account/credit \
-  -H "Content-Type: application/json" \
-  -d '{"accountId": "ID_DU_COMPTE", "amount": 1000, "currency": "MAD"}'
-```
-
-### Débiter un compte
-
-```bash
-curl -X POST http://localhost:8085/commands/account/debit \
-  -H "Content-Type: application/json" \
-  -d '{"accountId": "ID_DU_COMPTE", "amount": 500, "currency": "MAD"}'
-```
-
-### Consulter tous les comptes
-
-```bash
-curl http://localhost:8085/query/accounts/all
-```
-
-## Documentation API
-
-La documentation Swagger/OpenAPI est disponible à:
-- **Service principal**: http://localhost:8085/swagger-ui.html
-- **Service analytics**: http://localhost:8084/swagger-ui.html
-
-## Interfaces d'administration
 
 - **Axon Server Dashboard**: http://localhost:8024
 - **pgAdmin**: http://localhost:8088 (admin@bank.com / admin123)
@@ -163,6 +124,3 @@ Séparation des modèles de lecture et d'écriture:
 - **Command Side**: Gère les modifications (crédit, débit)
 - **Query Side**: Gère les lectures (consultation des comptes)
 
-## Auteur
-
-Projet réalisé dans le cadre de l'activité pratique - Event Sourcing et CQRS avec Axon Framework
